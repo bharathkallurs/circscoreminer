@@ -8,12 +8,10 @@ class MineScore:
 	
 	espn_cricinfo_url = "http://www.espncricinfo.com"
 
-
 	@staticmethod
 	def set_buffer(pageURL):
 		soup = BeautifulSoup(urllib2.urlopen(pageURL).read())
 		return soup
-
 
 	#set an object for the page given. put the details in that object
 	def fetch_page_details(self):
@@ -24,16 +22,13 @@ class MineScore:
 			print sys.exc_info()[0], e
 			return (-1, "Not able to fetch page details")
 
-
 	#gets the information of the match venue and redirects to match page
 	def fetch_current_match_urls(self):
 		try :
 			match_info_url = "http://www.espncricinfo.com/ci/engine/match/index.html?date="
 			match_info_url += time.strftime("%Y-%m-%d") #get the date to append to match info url and start fetching individual match urls to get scores
-			#match_info_url += "2015-02-14"
 			match_getter = MineScore.set_buffer(match_info_url)
 			match_getter.prettify()
-
 			match_type = (match_getter.find(class_="match-section-head").text).strip()
 
 			#get the One-Day International matches list
@@ -80,8 +75,6 @@ class MineScore:
 		team_B_list = [str(x) for x in team_B.split(" ")]
 		innings_req_list = [str(x) for x in innings_req.split(" ")]
 
-
-		print innings_req_list[:len(team_A_list)]
 		team = ""
 		if team_A in innings_req:
 			team = team_A
